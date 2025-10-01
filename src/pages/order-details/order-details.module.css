@@ -1,0 +1,13 @@
+.containerMain {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    max-width: 1240px;
+    margin: 120px auto 0;
+}
+
+.title {
+    max-width: 1260px;
+    margin-left: auto;
+    margin-right: auto;
+}

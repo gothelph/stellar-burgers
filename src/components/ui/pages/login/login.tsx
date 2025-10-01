@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import {
   Input,
   Button,
@@ -24,37 +24,35 @@ export const LoginUI: FC<LoginUIProps> = ({
         name='login'
         onSubmit={handleSubmit}
       >
-        <>
-          <div className='pb-6'>
-            <Input
-              type='email'
-              placeholder='E-mail'
-              onChange={(e) => setEmail(e.target.value)}
-              value={email}
-              name='email'
-              error={false}
-              errorText=''
-              size='default'
-            />
-          </div>
-          <div className='pb-6'>
-            <PasswordInput
-              onChange={(e) => setPassword(e.target.value)}
-              value={password}
-              name='password'
-            />
-          </div>
-          <div className={`pb-6 ${styles.button}`}>
-            <Button type='primary' size='medium' htmlType='submit'>
-              Войти
-            </Button>
-          </div>
-          {errorText && (
-            <p className={`${styles.error} text text_type_main-default pb-6`}>
-              {errorText}
-            </p>
-          )}
-        </>
+        <div className='pb-6'>
+          <Input
+            type='email'
+            placeholder='E-mail'
+            onChange={(e) => setEmail(e.target.value)}
+            value={email}
+            name='email'
+            error={false}
+            errorText=''
+            size='default'
+          />
+        </div>
+        <div className='pb-6'>
+          <PasswordInput
+            onChange={(e) => setPassword(e.target.value)}
+            value={password}
+            name='password'
+          />
+        </div>
+        <div className={`pb-6 ${styles.button}`}>
+          <Button type='primary' size='medium' htmlType='submit'>
+            Войти
+          </Button>
+        </div>
+        {errorText && (
+          <p className={`${styles.error} text text_type_main-default pb-6`}>
+            {errorText}
+          </p>
+        )}
       </form>
       <div className={`pb-4 ${styles.question} text text_type_main-default`}>
         Вы - новый пользователь?
@@ -64,7 +62,7 @@ export const LoginUI: FC<LoginUIProps> = ({
       </div>
       <div className={`${styles.question} text text_type_main-default pb-6`}>
         Забыли пароль?
-        <Link to={'/forgot-password'} className={`pl-2 ${styles.link}`}>
+        <Link to='/forgot-password' className={`pl-2 ${styles.link}`}>
           Восстановить пароль
         </Link>
       </div>

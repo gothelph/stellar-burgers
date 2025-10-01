@@ -1,8 +1,8 @@
 import { FC } from 'react';
-
 import { Input, Button } from '@zlden/react-developer-burger-ui-components';
-import styles from '../common.module.css';
 import { Link } from 'react-router-dom';
+
+import styles from '../common.module.css';
 import { PageUIProps } from '../common-type';
 
 export const ForgotPasswordUI: FC<PageUIProps> = ({
@@ -44,7 +44,7 @@ export const ForgotPasswordUI: FC<PageUIProps> = ({
       </form>
       <div className={`${styles.question} text text_type_main-default pb-6`}>
         Вспомнили пароль?
-        <Link to={'/login'} className={`pl-2 ${styles.link}`}>
+        <Link to='/login' className={`pl-2 ${styles.link}`}>
           Войти
         </Link>
       </div>

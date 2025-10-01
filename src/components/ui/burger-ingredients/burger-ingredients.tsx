@@ -19,50 +19,45 @@ export const BurgerIngredientsUI: FC<BurgerIngredientsUIProps> = memo(
     saucesRef,
     onTabClick
   }) => (
-    <>
-      <section className={styles.burger_ingredients}>
-        <nav>
-          <ul className={styles.menu}>
-            <Tab value='bun' active={currentTab === 'bun'} onClick={onTabClick}>
-              Булки
-            </Tab>
+    <section className={styles.burger_ingredients}>
+      <nav>
+        <ul className={styles.menu}>
+          {[
+            { value: 'bun', label: 'Булки' },
+            { value: 'main', label: 'Начинки' },
+            { value: 'sauce', label: 'Соусы' }
+          ].map(({ value, label }) => (
             <Tab
-              value='main'
-              active={currentTab === 'main'}
+              key={value}
+              value={value}
+              active={currentTab === value}
               onClick={onTabClick}
             >
-              Начинки
+              {label}
             </Tab>
-            <Tab
-              value='sauce'
-              active={currentTab === 'sauce'}
-              onClick={onTabClick}
-            >
-              Соусы
-            </Tab>
-          </ul>
-        </nav>
-        <div className={styles.content}>
-          <IngredientsCategory
-            title='Булки'
-            titleRef={titleBunRef}
-            ingredients={buns}
-            ref={bunsRef}
-          />
-          <IngredientsCategory
-            title='Начинки'
-            titleRef={titleMainRef}
-            ingredients={mains}
-            ref={mainsRef}
-          />
-          <IngredientsCategory
-            title='Соусы'
-            titleRef={titleSaucesRef}
-            ingredients={sauces}
-            ref={saucesRef}
-          />
-        </div>
-      </section>
-    </>
+          ))}
+        </ul>
+      </nav>
+      <div className={styles.content}>
+        <IngredientsCategory
+          title='Булки'
+          titleRef={titleBunRef}
+          ingredients={buns}
+          ref={bunsRef}
+        />
+        <IngredientsCategory
+          title='Начинки'
+          titleRef={titleMainRef}
+          ingredients={mains}
+          ref={mainsRef}
+        />
+        <IngredientsCategory
+          title='Соусы'
+          titleRef={titleSaucesRef}
+          ingredients={sauces}
+          ref={saucesRef}
+        />
+      </div>
+    </section>
   )
 );

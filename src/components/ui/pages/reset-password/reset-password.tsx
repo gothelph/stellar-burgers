@@ -41,6 +41,7 @@ export const ResetPasswordUI: FC<ResetPasswordUIProps> = ({
             error={false}
             errorText=''
             size='default'
+            autoComplete='one-time-code'
           />
         </div>
         <div className={`pb-6 ${styles.button}`}>
