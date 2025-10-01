@@ -13,7 +13,7 @@ import {
   selectOrderRequest,
   selectPlacedOrderData
 } from '../../services/slices/order';
-import { selectUser } from '../../services/slices/profile';
+import { selectUser } from '../../services/slices/userSlice';
 
 export const BurgerConstructor: FC = () => {
   const dispatch = useDispatch();

@@ -19,7 +19,7 @@ import { UserLogin } from '../routes/user-login';
 import { UserDislogin } from '../routes/user-dislogin';
 import { OrderDetailsModal } from '../modal/order-details-modal';
 import { IngredientDetailsPage } from '../../pages/ingredient-details-page.tsx/ingredients-details-page';
-import { getUser } from '../../services/slices/profile';
+import { getUser } from '../../services/slices/userSlice';
 import { fetchIngredients } from '../../services/slices/ingredients';
 
 import '../../index.css';

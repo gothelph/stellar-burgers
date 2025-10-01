@@ -1,7 +1,7 @@
 import React, { FC, ReactNode } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { useSelector } from '../../services/store';
-import { selectIsLoading, selectUser } from '../../services/slices/profile';
+import { selectIsLoading, selectUser } from '../../services/slices/userSlice';
 import { Preloader } from '@ui';
 
 interface LoginProps {

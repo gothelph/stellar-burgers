@@ -2,25 +2,21 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import ingredientsSlice from './slices/ingredients';
 import burgerConstructorSlice from './slices/burger-constructor';
 import orderSlice from './slices/order';
-import profileSlice from './slices/profile';
 import feedSlice from './slices/feed';
+import userSlice from './slices/userSlice';
 
 import {
   TypedUseSelectorHook,
   useDispatch as dispatchHook,
   useSelector as selectorHook
 } from 'react-redux';
-import loginSlice from './slices/login';
-import registerSlice from './slices/register';
 
 export const rootReducer = combineReducers({
   ingredients: ingredientsSlice.reducer,
   burgerConstructor: burgerConstructorSlice.reducer,
   orders: orderSlice.reducer,
-  profile: profileSlice.reducer,
-  feed: feedSlice.reducer,
-  login: loginSlice.reducer,
-  register: registerSlice.reducer
+  user: userSlice.reducer,
+  feed: feedSlice.reducer
 });
 
 const store = configureStore({
