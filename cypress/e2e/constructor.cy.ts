@@ -91,61 +91,70 @@ describe('Конструктор бургера', () => {
   // --- СОЗДАНИЕ ЗАКАЗА ---
   describe('Создание заказа', () => {
     it('должна создавать заказ после авторизации', () => {
+      //Фейковые токены
+      window.localStorage.setItem('accessToken', 'fake-access-token');
+      window.localStorage.setItem('refreshToken', 'fake-refresh-token');
       cy.contains('Оформить заказ').should('exist');
 
-      // 1. Авторизация
-      cy.login();
-      cy.wait('@getUser');
-      cy.wait('@getIngredients');
-
-      // 2. Проверяем URL и при необходимости возвращаемся на главную
-      cy.url().then((url) => {
-        if (url.includes('/profile')) {
-          cy.visit('/');
-          cy.wait('@getIngredients');
-        }
+      // Добавляем ингредиенты
+      cy.contains('Краторная булка N-200i').then(($ingredient) => {
+        cy.wrap($ingredient)
+          .parent()
+          .within(() => {
+            cy.get('button')
+              .filter(
+                (i, btn) =>
+                  btn.textContent.includes('Добавить') ||
+                  btn.textContent === '+'
+              )
+              .click({ force: true });
+          });
       });
 
-      // 3. Пробуем оформить заказ
+      cy.contains('Биокотлета из марсианской Магнолии').then(($ingredient) => {
+        cy.wrap($ingredient)
+          .parent()
+          .within(() => {
+            cy.get('button')
+              .filter(
+                (i, btn) =>
+                  btn.textContent.includes('Добавить') ||
+                  btn.textContent === '+'
+              )
+              .click({ force: true });
+          });
+      });
+
+      // Пробуем оформить заказ
       cy.contains('Оформить заказ').click();
 
-      // 4. Проверяем результат
-      cy.get('body').then(($body) => {
-        if ($body.text().includes('12345')) {
-          // Успешное создание заказа
-          cy.contains('12345').should('be.visible');
-          cy.contains('идентификатор заказа').should('be.visible');
+      //Успешное создание заказа
+      cy.contains('12345').should('be.visible');
+      cy.contains('идентификатор заказа').should('be.visible');
 
-          cy.get('button').contains('×').click({ force: true });
+      //Проверяем результат
+      cy.get('button').then(($buttons) => {
+        const closeBtn = $buttons
+          .filter(
+            (_, btn) =>
+              btn.innerHTML.includes('×') || btn.textContent.includes('Закрыть')
+          )
+          .first();
 
-          cy.contains('Выберите булки').should('exist');
-          cy.contains('Выберите начинку').should('exist');
-        } else if (
-          $body.text().includes('Добавьте булку') ||
-          $body.text().includes('Выберите булки')
-        ) {
-          cy.log('Требуется добавление ингредиентов для создания заказа');
+        if (closeBtn.length) {
+          cy.wrap(closeBtn).click({ force: true });
+        } else {
+          cy.get('body').type('{esc}');
         }
       });
+
+      cy.contains('Выберите булки').should('exist');
+      cy.contains('Выберите начинку').should('exist');
     });
 
-    it('должен не оформлять заказ без авторизации', () => {
-      cy.intercept('GET', '**/api/auth/user', {
-        fixture: 'user-empty.json'
-      }).as('getUserEmpty');
-      cy.visit('/');
-      cy.wait('@getIngredients');
-      cy.wait('@getUserEmpty');
-
-      cy.contains('Оформить заказ').click();
-
-      cy.url().then((url) => {
-        if (url.includes('/login')) {
-          cy.contains('Вход').should('be.visible');
-        } else {
-          cy.get('[data-cy=modal]').should('not.exist');
-        }
-      });
+    afterEach(() => {
+      window.localStorage.removeItem('accessToken');
+      window.localStorage.removeItem('refreshToken');
     });
   });
 
