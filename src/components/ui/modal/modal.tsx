@@ -21,6 +21,7 @@ export const ModalUI: FC<TModalUIProps> = memo(
             type='button'
             onClick={onClose}
             aria-label='Закрыть модальное окно'
+            data-cy='modal-close-button'
           >
             <CloseIcon type='primary' />
           </button>
