@@ -162,12 +162,11 @@ describe('Конструктор бургера', () => {
               .click({ force: true });
           });
       });
-      cy.get('body').then(($body) => {
-        if ($body.text().includes('Краторная булка N-200i (верх)')) {
-          cy.contains('Краторная булка N-200i (верх)').should('exist');
-          cy.contains('Краторная булка N-200i (низ)').should('exist');
-        }
-      });
+      // Проверка конструктора
+      cy.get('[data-cy="burger-constructor"]').within(() => {
+        cy.contains('Краторная булка N-200i (верх)').should('exist');
+        cy.contains('Краторная булка N-200i (низ)').should('exist');
+      }); //Исправлено 11
     });
 
     it('должна обновлять стоимость', () => {
