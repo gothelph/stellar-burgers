@@ -30,7 +30,7 @@ describe('Конструктор бургера', () => {
     });
   });
 
-  // --- МОДАЛЬНЫЕ ОКНА ---
+  // --- МОГИЛЬНЫЕ ОКНА ---
   describe('Модальные окна ингредиентов', () => {
     it('должна открывать модальное окно ингредиента при клике', () => {
       cy.contains('Краторная булка N-200i').click();
@@ -43,21 +43,24 @@ describe('Конструктор бургера', () => {
       cy.contains('Краторная булка N-200i').click();
       cy.url().should('include', '/ingredients/');
       cy.get('[data-cy="modal-close-button"]').click();
-      cy.url().should('eq', 'http://localhost:4000/');
+      cy.get('[data-cy="modal"]').should('not.exist'); //Исправлено 7
+      cy.location('pathname').should('eq', '/'); //Исправлено 1
     });
 
     it('должна закрывать модальное окно по клику на оверлей', () => {
       cy.contains('Краторная булка N-200i').click();
       cy.url().should('include', '/ingredients/');
       cy.get('[data-cy="modal-overlay"]').click({ force: true });
-      cy.url().should('eq', 'http://localhost:4000/');
+      cy.get('[data-cy="modal"]').should('not.exist'); //Исправлено 8
+      cy.location('pathname').should('eq', '/'); // Исправлено 2
     });
 
     it('должна закрывать модальное окно по нажатию ESC', () => {
       cy.contains('Краторная булка N-200i').click();
       cy.url().should('include', '/ingredients/');
       cy.get('body').type('{esc}');
-      cy.url().should('eq', 'http://localhost:4000/');
+      cy.get('[data-cy="modal"]').should('not.exist'); //Исправлено 9
+      cy.location('pathname').should('eq', '/'); // Исправлено 3
     });
   });
 
@@ -65,8 +68,11 @@ describe('Конструктор бургера', () => {
   describe('Создание заказа', () => {
     it('должна создавать заказ после авторизации', () => {
       //Фейковые токены
-      window.localStorage.setItem('accessToken', 'fake-access-token');
-      window.localStorage.setItem('refreshToken', 'fake-refresh-token');
+      cy.window().then((win) => {
+        win.localStorage.setItem('accessToken', 'fake-access-token');
+        win.localStorage.setItem('refreshToken', 'fake-refresh-token');
+      }); //Исправлено 5
+
       cy.get('[data-cy="order-button"]').should('exist');
       cy.contains('Краторная булка N-200i').then(($ingredient) => {
         cy.wrap($ingredient)
@@ -97,21 +103,19 @@ describe('Конструктор бургера', () => {
       });
 
       cy.get('[data-cy="order-button"]').click();
+      cy.wait('@createOrder'); // Исправлено 4
+      cy.contains('12345').should('be.visible');
+      cy.contains('идентификатор заказа').should('be.visible');
+      cy.get('[data-cy="modal-close-button"]').click();
 
-      cy.get('body').then(($body) => {
-        if ($body.text().includes('12345')) {
-          cy.contains('12345').should('be.visible');
-          cy.contains('идентификатор заказа').should('be.visible');
-          cy.get('[data-cy="modal-close-button"]').click();
-          cy.contains('Выберите булки').should('exist');
-          cy.contains('Выберите начинку').should('exist');
-        } else if (
-          $body.text().includes('Добавьте булку') ||
-          $body.text().includes('Выберите булки')
-        ) {
-          cy.log('Требуется добавление ингредиентов для создания заказа');
-        }
-      });
+      // Проверка могилки
+      cy.get('[data-cy="modal"]').should('not.exist');
+
+      // Проверка конструктора
+      cy.get('[data-cy="burger-constructor"]').within(() => {
+        cy.contains('Выберите булки').should('exist');
+        cy.contains('Выберите начинку').should('exist');
+      }); // Исправлено 10
     });
 
     it('должен не оформлять заказ без авторизации', () => {
@@ -132,8 +136,10 @@ describe('Конструктор бургера', () => {
     });
 
     afterEach(() => {
-      window.localStorage.removeItem('accessToken');
-      window.localStorage.removeItem('refreshToken');
+      cy.window().then((win) => {
+        win.localStorage.removeItem('accessToken');
+        win.localStorage.removeItem('refreshToken');
+      }); //Исправлено 6
     });
   });
 
