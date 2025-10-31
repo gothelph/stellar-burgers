@@ -1,0 +1,26 @@
+{
+    "success": true,
+    "name": "Space spicy burger",
+    "order": {
+      "ingredients": [
+        {
+          "_id": "643d69a5c3f7b9001cfa093c",
+          "name": "Краторная булка N-200i",
+          "type": "bun",
+          "proteins": 80,
+          "fat": 24,
+          "carbohydrates": 53,
+          "calories": 420,
+          "price": 1255,
+          "image": "https://code.s3.yandex.net/react/code/bun-02.png",
+          "image_large": "https://code.s3.yandex.net/react/code/bun-02-large.png",
+          "image_mobile": "https://code.s3.yandex.net/react/code/bun-02-mobile.png"
+        }
+      ],
+      "_id": "12345",
+      "status": "done",
+      "number": 12345,
+      "createdAt": "2024-01-25T12:00:00.000Z",
+      "updatedAt": "2024-01-25T12:00:00.000Z"
+    }
+  }
