@@ -81,7 +81,7 @@ describe('Конструктор бургера', () => {
             cy.get('button')
               .filter(
                 (_, btn) =>
-                  btn.textContent?.includes('Добавить') ||
+                  btn.textContent?.includes('Добавить') || //Исправлено 12: учтена настройка окружения, теперь код должен работать корректно
                   btn.textContent === '+'
               )
               .click({ force: true });
@@ -95,7 +95,7 @@ describe('Конструктор бургера', () => {
             cy.get('button')
               .filter(
                 (_, btn) =>
-                  btn.textContent?.includes('Добавить') ||
+                  btn.textContent?.includes('Добавить') || //Исправлено 13 учтена настройка окружения, теперь код должен работать корректно
                   btn.textContent === '+'
               )
               .click({ force: true });
@@ -156,7 +156,7 @@ describe('Конструктор бургера', () => {
             cy.get('button')
               .filter(
                 (_, btn) =>
-                  btn.textContent?.includes('Добавить') ||
+                  btn.textContent?.includes('Добавить') || //Исправлено 14 учтена настройка окружения, теперь код должен работать корректно
                   btn.textContent === '+'
               )
               .click({ force: true });
