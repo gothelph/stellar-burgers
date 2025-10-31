@@ -80,8 +80,8 @@ describe('Конструктор бургера', () => {
           .within(() => {
             cy.get('button')
               .filter(
-                (i, btn) =>
-                  btn.textContent.includes('Добавить') ||
+                (_, btn) =>
+                  btn.textContent?.includes('Добавить') ||
                   btn.textContent === '+'
               )
               .click({ force: true });
@@ -95,7 +95,7 @@ describe('Конструктор бургера', () => {
             cy.get('button')
               .filter(
                 (_, btn) =>
-                  btn.textContent.includes('Добавить') ||
+                  btn.textContent?.includes('Добавить') ||
                   btn.textContent === '+'
               )
               .click({ force: true });
@@ -156,7 +156,7 @@ describe('Конструктор бургера', () => {
             cy.get('button')
               .filter(
                 (_, btn) =>
-                  btn.textContent.includes('Добавить') ||
+                  btn.textContent?.includes('Добавить') ||
                   btn.textContent === '+'
               )
               .click({ force: true });
